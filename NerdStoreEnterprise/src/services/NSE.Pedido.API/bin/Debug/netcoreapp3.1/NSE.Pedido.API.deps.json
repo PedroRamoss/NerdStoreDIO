@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "NSE.Pedido.API/1.0.0": {
+        "runtime": {
+          "NSE.Pedido.API.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "NSE.Pedido.API/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

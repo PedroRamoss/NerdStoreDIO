@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-//using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using NSE.WebApp.MVC.Models;
 using NSE.WebApp.MVC.Services;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace NSE.WebApp.MVC.Controllers
 {
-    public class IdentidadeController : Controller
+    public class IdentidadeController : MainController
     {
         private readonly IAutenticacaoService _autenticacaoService;
 
@@ -37,9 +36,9 @@ namespace NSE.WebApp.MVC.Controllers
 
             var response = await _autenticacaoService.Registro(usuarioRegistro);
 
-            await RealizarLogin(response);
+            if (ResponsePossuiErros(response.ResponseResult)) return View(usuarioRegistro);
 
-            //if (false) return View(usuarioRegistro);
+            await RealizarLogin(response);
 
             return RedirectToAction("Index", "Home");
         }
@@ -47,30 +46,36 @@ namespace NSE.WebApp.MVC.Controllers
 
         [HttpGet]
         [Route("login")]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = null)
         {
+            ViewData["ReturnLogin"] = returnUrl;
             return View();
         }
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login(UsuarioLogin usuarioLogin)
+        public async Task<IActionResult> Login(UsuarioLogin usuarioLogin, string returnUrl = null)
         {
+            ViewData["ReturnLogin"] = returnUrl;
             if (!ModelState.IsValid) return View(usuarioLogin);
 
             var response = await _autenticacaoService.Login(usuarioLogin);
 
-            //if (false) return View(usuarioLogin);
+            if (ResponsePossuiErros(response.ResponseResult)) return View(usuarioLogin);
 
             await RealizarLogin(response);
 
-            return RedirectToAction("Index", "Home");
+            if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Home");
+
+            return LocalRedirect(returnUrl);
         }
 
         [HttpGet]
         [Route("sair")]
         public async Task<IActionResult> Logout()
         {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -79,9 +84,7 @@ namespace NSE.WebApp.MVC.Controllers
             var token = ObterTokenFormatado(resposta.AccessToken);
 
             var claims = new List<Claim>();
-
             claims.Add(new Claim("JWT", resposta.AccessToken));
-
             claims.AddRange(token.Claims);
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -95,8 +98,7 @@ namespace NSE.WebApp.MVC.Controllers
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
-                authProperties
-                );
+                authProperties);
         }
 
         private static JwtSecurityToken ObterTokenFormatado(string jwtToken)

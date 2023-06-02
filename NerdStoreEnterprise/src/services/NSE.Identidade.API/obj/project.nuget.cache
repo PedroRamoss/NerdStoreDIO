@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ETq+ErrMV0s/r9kVRiF6/jjOXGuY7ZcAvyW8Ph8tPveyeSxLStv4WutwPvafnayuYRNLcMPZXaKAjTs8K+yRsA==",
+  "dgSpecHash": "KaojREUAsRuA2CQ7WmUflnPHjUa6plHKODgdpK8W8u+8c3Q6P6+54C1u4V0bj8qBkTmxygi9fBgz95vZXwqx4g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pedro\\Documents\\Enterprise Application - Desenvolvedor.io\\NerdStoreEnterprise\\src\\services\\NSE.Identidade.API\\NSE.Identidade.API.csproj",
+  "projectFilePath": "C:\\Users\\pedro\\Documents\\NerdStore\\NerdStoreDIO\\NerdStoreEnterprise\\src\\services\\NSE.Identidade.API\\NSE.Identidade.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\pedro\\.nuget\\packages\\fluentvalidation\\8.6.2\\fluentvalidation.8.6.2.nupkg.sha512",
     "C:\\Users\\pedro\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.3\\microsoft.aspnetcore.authentication.jwtbearer.3.1.3.nupkg.sha512",
     "C:\\Users\\pedro\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.3\\microsoft.aspnetcore.cryptography.internal.3.1.3.nupkg.sha512",
     "C:\\Users\\pedro\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.3\\microsoft.aspnetcore.cryptography.keyderivation.3.1.3.nupkg.sha512",
